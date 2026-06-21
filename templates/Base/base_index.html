@@ -1,0 +1,42 @@
+<!doctype html>
+{% load static %}
+
+<html lang="es" data-bs-theme="auto">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="" />
+
+    <title>HOME</title>
+
+    <!-- IMPORTACIONES DE CSS -->
+    {% include 'Importaciones/head_css.html' %}
+
+</head>
+
+<body>
+
+    <!-- BARRA DE NAVEGACION -->
+    {% include 'Complementos/navBar.html' %}
+
+    <main>
+        
+        <!-- CARD DE CONTENIDO -->
+        <div class="container my-5 py-3">
+            <div class="row p-4 pb-3 rounded-3 border shadow-lg py-4">
+
+                    {% block card_contenido %}
+                    {% endblock %}
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- IMPORTACIONES DE SCRIPTS -->
+    {% include 'Importaciones/body_script.html' %}
+
+</body>
+
+</html>
