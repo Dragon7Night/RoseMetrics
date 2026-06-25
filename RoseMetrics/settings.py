@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'roseApp'
+    # ENCAPSULACION DE APPS
+    'Apps.roseApp'
 ]
 
 MIDDLEWARE = [
@@ -81,11 +82,11 @@ pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nombre-DB',
-        'USER': 'user',
-        'PASSWORD': 'pass',
-        'HOST': 'host',
-        'PORT': 'puerto',
+        'NAME': 'RoseDB',
+        'USER': 'root',
+        'PASSWORD': '',
+        # 'HOST': 'host',
+        # 'PORT': 'puerto',
     }
 }
 
