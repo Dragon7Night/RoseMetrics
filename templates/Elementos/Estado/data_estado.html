@@ -19,25 +19,30 @@
         </thead>
 
         <tbody>
+          <!-- estado in EstadoKey -->
+          {% comment %}
           {% for estado in EstadoKey %}
           <tr>
-            <td>{{ estado.id }}</td>
-            <td>{{ estado.estado }}</td>
+            <!-- estado.id -> estado.estado -->
+            <td>{% comment %}{{ estado.id }}{% endcomment %}</td>
+            <td>{% comment %}{{ estado.estado }}{% endcomment %}</td>
             <td class="text-center">
-              <a href="{% url 'editar_estado' estado.id %}" class="mx-2 text-success">
+              <a href="#" class="mx-2 text-success">
                 <i class="fa-solid fa-pen fa-lg"></i>
               </a>
 
-              <a href="{% url 'eliminar_estado' estado.id %}" class="mx-2 text-danger">
+              <!-- {% url 'eliminar_estado' estado.id %}  -->
+              <a href="#" class="mx-2 text-danger">
                 <i class="fa-solid fa-trash"></i>
               </a>
 
-              <a href="{% url 'crud_estado_api' estado.id %}" class="mx-2 text-primary">
+              <a href="#" class="mx-2 text-primary">
                 <i class="bi bi-folder2-open"></i>
               </a>
             </td>
           </tr>
           {% endfor %}
+          {% endcomment %}
         </tbody>
       </table>
     </div>

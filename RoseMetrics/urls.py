@@ -21,7 +21,7 @@ from Apps.roseApp.views import landingPage
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', landingPage, name='landin_page'),
+    path('', landingPage, name='landing_page'),
 
     path('rose/', include('Apps.roseApp.urls'))
 ]
