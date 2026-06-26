@@ -15,12 +15,9 @@ from Apps.roseApp import forms
 import sympy as sp
 # '================================================='
 
-
 # °===========================°
 #    °Vistas -> roseApp
 # °===========================°
-
-
 
 # Landig page (home)
 def landingPage(request):
