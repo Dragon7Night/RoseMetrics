@@ -1,10 +1,11 @@
 {% load static %}
 
-<nav class="navbar navbar-expand-md bg-dark sticky-top border-bottom" data-bs-theme="dark">
+
+<nav class="bg-custom-1 navbar navbar-expand-md sticky-top border-bottom" data-bs-theme="dark">
   <div class="container-fluid px-4">
     
     <!-- Logo del navBar con href -->
-    <a class="navbar-brand" href="{% url 'landing_page' %}">RoseMetrics</a>
+    <a class="navbar-brand txt-bold" href="{% url 'landing_page' %}">RoseMetrics 🌹</a>
 
     <!-- Boton hamburguesa en pantallas pequeñas -->
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -14,7 +15,7 @@
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         
-        <div class="offcanvas-header">
+        <div class="bg-custom-2-1 offcanvas-header">
             <!-- Titulo de la seccion de hamburguesa -->
             <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Opciones | Home</h5>
             <!-- Boton de cierre del hamburguesa -->
@@ -22,16 +23,16 @@
         </div>
         
         <!-- Listado de botones ajustables entre nabBar y hamburguesa  -->
-        <div class="offcanvas-body">
+        <div class="bg-custom-2-2 offcanvas-body">
             <ul class="navbar-nav mx-auto text-center gap-3 gap-md-4">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'landing_page' %}">Boton1</a>
+                    <a class="nav-link text-white txt-bold hover-btn" href="{% url 'landing_page' %}">Nociones matematicas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'landing_page' %}">Boton2</a>
+                    <a class="nav-link text-white txt-bold hover-btn" href="{% url 'registrar_meses' %}">Registrar meses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'landing_page' %}">Boton3</a>
+                    <a class="nav-link text-white txt-bold hover-btn" href="{% url 'landing_page' %}">Optimizador</a>
                 </li>
             </ul>
         </div>

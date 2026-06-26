@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoseMetrics - Ingreso de Datos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* Tus estilos personalizados unificados */
+        .bg-custom-1 {
+            background-color: #1a1a2e !important;
+        }
+        .offcanvas {
+            background-color: #1a1a2e !important;
+        }
+        
+        /* Efecto Hover ralentizado con disminución */
+        .hover-btn {
+            border-radius: 4px; 
+            transition: all 0.4s ease-out !important; 
+        }
+        .hover-btn:hover {
+            background-color: #000000 !important;
+            border-radius: 12px !important;
+            transform: scale(0.95) !important;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <nav class="bg-custom-1 navbar navbar-expand-md sticky-top border-bottom" data-bs-theme="dark">
+      <div class="container-fluid px-4">
+        <a class="navbar-brand" href="#">RoseMetrics 🌹</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Opciones | Home</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav mx-auto text-center gap-3 gap-md-4">
+                    <li class="nav-item"><a class="nav-link text-white" href="#">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#">Historial</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#">Configuración</a></li>
+                </ul>
+            </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-7">
+                
+                <div class="text-center mb-4">
+                    <h1 class="fw-bold text-dark">Simulador de Optimización</h1>
+                    <p class="text-muted">Introduce los datos financieros del período para proyectar los usuarios estables y calcular los ingresos máximos mediante análisis marginal.</p>
+                </div>
+
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4 p-md-5">
+                        
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="{{ form.num_mes.id_for_label }}" class="form-label fw-semibold text-secondary">Número de Mes</label>
+                                    {{ form.num_mes }}
+                                    {% if form.num_mes.errors %}
+                                        <div class="text-danger small mt-1">{{ form.num_mes.errors.0 }}</div>
+                                    {% endif %}
+                                    <div class="form-text">Ej: 1 para el primer mes de registro.</div>
+                                </div>
+                            </div>
+
+                            <hr class="text-muted my-4">
+
+                            <h5 class="card-title mb-3 text-primary fw-bold">💰 Estructura de Precios</h5>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="{{ form.precio_actual.id_for_label }}" class="form-label fw-semibold text-secondary">Precio Actual (Pa)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        {{ form.precio_actual }}
+                                    </div>
+                                    {% if form.precio_actual.errors %}
+                                        <div class="text-danger small mt-1">{{ form.precio_actual.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="{{ form.precio_anterior.id_for_label }}" class="form-label fw-semibold text-secondary">Precio Anterior</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        {{ form.precio_anterior }}
+                                    </div>
+                                    {% if form.precio_anterior.errors %}
+                                        <div class="text-danger small mt-1">{{ form.precio_anterior.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="form-text text-muted mt-2">La diferencia definirá automáticamente la variación de precio ($V_{ps}$).</div>
+                            </div>
+
+                            <hr class="text-muted my-4">
+
+                            <h5 class="card-title mb-3 text-primary fw-bold">📊 Comportamiento de Suscriptores</h5>
+                            <div class="row g-3 mb-4">
+                                <div class="col-12">
+                                    <label for="{{ form.sub_totales_activos.id_for_label }}" class="form-label fw-semibold text-secondary">Total Suscriptores Activos Iniciales</label>
+                                    {{ form.sub_totales_activos }}
+                                    {% if form.sub_totales_activos.errors %}
+                                        <div class="text-danger small mt-1">{{ form.sub_totales_activos.errors.0 }}</div>
+                                    {% endif %}
+                                    <div class="form-text">Base de usuarios en curso requerida para procesar la Tasa de Fuga.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="{{ form.sub_mensuales_nuevas_max.id_for_label }}" class="form-label fw-semibold text-secondary">Suscripciones Máximas (Sm)</label>
+                                    {{ form.sub_mensuales_nuevas_max }}
+                                    {% if form.sub_mensuales_nuevas_max.errors %}
+                                        <div class="text-danger small mt-1">{{ form.sub_mensuales_nuevas_max.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="{{ form.sub_mensuales_perdidas_max.id_for_label }}" class="form-label fw-semibold text-secondary">Suscripciones Perdidas (Sp)</label>
+                                    {{ form.sub_mensuales_perdidas_max }}
+                                    {% if form.sub_mensuales_perdidas_max.errors %}
+                                        <div class="text-danger small mt-1">{{ form.sub_mensuales_perdidas_max.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 mt-5">
+                                <button type="submit" class="btn btn-primary btn-lg bg-custom-1 border-0 hover-btn py-3 fw-bold shadow">
+                                    🚀 Ejecutar Simulación Matemática
+                                </button>
+                            </div>
+
+                        </form>
+                        
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <p class="text-muted small">Desarrollado para RoseMetrics. Las ecuaciones diferenciales y optimizaciones marginales se calculan de manera asíncrona mediante SymPy al procesar el formulario.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

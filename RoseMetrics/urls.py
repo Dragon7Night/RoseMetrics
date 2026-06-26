@@ -23,5 +23,8 @@ urlpatterns = [
 
     path('', landingPage, name='landing_page'),
 
+    # Importación de la rose
     path('rose/', include('Apps.roseApp.urls'))
+
+
 ]

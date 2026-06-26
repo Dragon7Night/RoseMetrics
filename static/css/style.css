@@ -1,0 +1,39 @@
+
+/* Background de NavBar */
+nav.bg-custom-1{
+    background-color: rgb(3, 3, 148) !important;
+}
+
+/* Background hamburguesa HEADER */
+.bg-custom-2-1{
+    background-color: rgba(2, 2, 83, 0.425) !important;
+}
+
+/* Background hamburguesa BODY*/
+.bg-custom-2-2{
+    background-color: rgba(3, 3, 148, 0.212) !important;
+}
+
+/* Negrita */
+.txt-bold{
+    font-weight: bold !important;
+}
+
+
+/* BTN normal */
+.hover-btn {
+    /* mantener los bordes, para evitar bug visual*/
+    border-radius: 4px; 
+
+    /* vuelve a su estado normal despues de 5s del hover */
+    transition: all 0.5s ease-out !important; 
+}
+
+/* BTN hover */
+.hover-btn:hover {
+    background-color: rgba(11, 11, 66, 0.459) !important;
+    border-radius: 15% !important;
+    
+    /* cambia su scale durante el hover */
+    transform: scale(0.92) !important;
+}
