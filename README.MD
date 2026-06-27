@@ -29,68 +29,69 @@ El núcleo del proyecto utiliza las siguientes dependencias:
 ## Pasos para la Instalación
 
 1. **Ubicarse en la terminal** en la ruta de su preferencia.
-   ´´´bash
+
+   ```bash
    cd C:/
    mkdir ProyectosGit
    cd ProyectosGit
-   ´´´
+   ```
 
    - Sugerencia de codigo (opcional)
 
-   ´´´bash
+   ```bash
       cd C:/ ; mkdir ProyectosGit ; cd ProyectosGit
-   ´´´
+   ```
 2. Clonación del repositorio.
 
-   ´´´bash
+   ```bash
       git clone https://github.com/Dragon7Night/RoseMetrics.git
-   ´´´
+   ```
 
 3. Acceder a la carpeta del proyecto.
 
-   ´´´bash
+   ```bash
       cd RoseMetrics
-   ´´´
+   ```
 
    > **Nota:** Si no quieres crear un entorno virtual en el proyecto puedes saltarte al paso número 6 directamente. 
 
 4. Crea entorno virtual. (Opcional)
 
-   ´´´bash
+   ```bash
       py -m venv .env
-   ´´´
+   ```
 
 5. Activar entorno virtual (Opcional)
 
-   ´´´bash
+   ```bash
       .env\Scripts\activate
-   ´´´
+   ```
 
-   > **Nota:** para desactivar el entorno virtual se usa el comando ´deactivate´.
+   > **Nota:** para desactivar el entorno virtual se usa el comando `deactivate`.
 
 6. Instalación de requirements
 
-   ´´´bash
+   ```bash
       pip install -m requirements.txt
-   ´´´
+   ```
 
 7. Verificar librerias instaladas (Opcional)
 
-   ´´´bash
+   ```bash
       pip list
-   ´´´
+   ```
 
 8. Iniciar proyecto en Django
 
-   ´´´bash
+   ```bash
       py .\manage.py runserver
-   ´´´
+   ```
 
    o
 
-   ´´´bash
+   ```bash
       py -m django runserver
-   ´´´
+   ```
 
 
 ----------------------------
