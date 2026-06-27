@@ -1,7 +1,12 @@
+
+# '======[Importaciones]============================'
 from django.db import models
 
-# Create your models here.
+# '==============================================='
 
+# °===========================°
+#    °Models -> roseApp
+# °===========================°
 
 class Mes(models.Model):
     num_mes = models.IntegerField()

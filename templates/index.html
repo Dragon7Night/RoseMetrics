@@ -1,0 +1,57 @@
+{% extends 'Base/base_index.html' %}
+
+{% load static %}
+
+<!-- Nombre de la pestaña -->
+{% block name_page %} Landing Page {% endblock %}
+
+
+{% block card_contenido %}
+<div class="container py-5">
+    <div class="row justify-content-center text-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            
+            <div class="mb-5 d-flex justify-content-center">
+                <div class="logo-wrapper p-3 bg-white rounded-circle shadow-sm border" style="width: 180px; height: 180px; transition: transform 0.3s ease;">
+                    <img src="{% static 'img/LOGO.png' %}" alt="Logo RoseMetrics" class="img-fluid w-100 h-100 object-fit-contain">
+                </div>
+            </div>
+
+            <div class="project-info mb-5">
+                <h1 class="display-3 fw-extrabold text-dark mb-3" style="letter-spacing: -1px;">
+                    Optimización Financiera Inteligente con RoseMetrics
+                </h1>
+                
+                <p class="text-secondary fs-5 lh-base mx-auto mb-4" style="max-width: 700px;">
+                    Bienvenido a la plataforma avanzada para realizar proyecciones en el precio de suscripciones. Nuestra tecnología te permite anticipar el comportamiento de tus usuarios mediante modelos matemáticos basados en curvas de ingresos y tasas de fuga reales.
+                </p>
+                
+                <div class="row g-3 justify-content-center my-4 text-start small">
+                    <div class="col-sm-4">
+                        <div class="p-3 bg-light rounded border-start border-primary border-3">
+                            <span class="fw-bold text-dark d-block"> Derivadas Simbólicas</span>
+                            Cálculo automático con SymPy.
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="p-3 bg-light rounded border-start border-warning border-3">
+                            <span class="fw-bold text-dark d-block">Precio Óptimo</span>
+                            Maximización de los ingresos.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 col-12 col-sm-8 col-md-6 mx-auto">
+                <a href="{% url 'registrar_meses' %}" class="btn btn-primary btn-lg py-3 fw-bold text-white shadow-lg border-0 btn-action-blue" style="background-color: #0d6efd; transition: all 0.3s ease;">
+                    Registrar datos de los meses
+                </a>
+                <span class="text-muted small mt-2 d-block">Comienza ingresando los datos de tus últimos dos meses para calcular proyecciones.</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

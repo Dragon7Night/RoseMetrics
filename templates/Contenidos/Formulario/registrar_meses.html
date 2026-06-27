@@ -6,6 +6,102 @@
 <!--    °Pagina -> Registrar meses       -->
 <!-- °=================================° -->
 
+
+<!-- Nombre de la pestaña -->
+{% block name_page %} Registro de datos {% endblock %}
+
+{% block card_contenido %}
+<div class="container-fluid py-2">
+    
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h3 class="fw-bold text-dark">Simulador Bi-Mensual RoseMetrics</h3>
+            <p class="text-muted">Ingresa los datos correspondientes a ambos períodos para efectuar el análisis de derivadas correlacionadas.</p>
+            <hr class="w-25 mx-auto border-2 border-primary">
+        </div>
+    </div>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+        
+        <div class="row g-4 justify-content-center">
+            
+            <div class="col-12 col-lg-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-header bg-secondary text-white py-3">
+                        <h5 class="card-title mb-0 text-center fw-bold">📅 Período 1: Mes Histórico / Anterior</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="small text-muted mb-4">Introduce las métricas base del mes de origen previas al último cambio estructural de precios.</p>
+                        
+                        {% for field in formKeyAnterior %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label fw-semibold text-secondary small">
+                                    {{ field.label }}
+                                </label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger xsmall mt-1">{{ field.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="card shadow border-0 h-100" style="border-top: 4px solid #1a1a2e !important;">
+                    <div class="card-header bg-custom-1 text-white py-3" style="background-color: #1a1a2e;">
+                        <h5 class="card-title mb-0 text-center fw-bold">🚀 Período 2: Mes de Control / Actual</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="small text-muted mb-4">Introduce las métricas recolectadas tras la variación de tarifas para proyectar la estabilidad financiera.</p>
+                        
+                        {% for field in formKeyActual %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label fw-semibold text-secondary small">
+                                    {{ field.label }}
+                                </label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger xsmall mt-1">{{ field.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <div class="d-grid gap-2 col-md-6 mx-auto">
+                    <button type="submit" class="btn btn-primary btn-lg py-3 fw-bold shadow hover-btn" style="background-color: #1a1a2e; border: none;">
+                        📊 Consolidar Períodos y Procesar Métricas
+                    </button>
+                    <small class="text-muted mt-1">Al presionar el botón se validarán los formularios simétricamente.</small>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %}
 {% block card_contenido %}
 
 
@@ -46,5 +142,5 @@
 
 
 {% endblock %}
-
+{% endcomment %}
 

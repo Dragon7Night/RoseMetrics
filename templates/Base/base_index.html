@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content="" />
 
-    <title></title>
+    <title>{% block name_page %} NOMBRE_PAGINA {% endblock %}· RoseMetrics</title>
 
     <!-- IMPORTACIONES DE CSS -->
     {% include 'Importaciones/head_css.html' %}
@@ -27,7 +27,7 @@
     <main>
         
         <!-- CARD DE CONTENIDO -->
-        <div class="container my-5 py-3">
+        <div class="container-fluid my-2 px-md-5 py-3">
             <div class="row p-4 pb-3 rounded-3 border shadow-lg py-4">
 
                     {% block card_contenido %}

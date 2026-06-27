@@ -21,20 +21,37 @@ import sympy as sp
 
 # Landig page (home)
 def landingPage(request):
-    return render(request, 'Base/base_index.html')
+    return render(request, 'index.html')
 
 def registrarMeses(request):
     formMes = forms.MesesForms()
     
     if request.method == 'POST':
-        formMes = forms.MesesForms(request.POST)
-        if formMes.is_valid():
-            formMes.save()
 
-            # redireccion automatica
-            return HttpResponseRedirect(reverse('resultados_graficos'))
+        """
+        prefix
+        esta tag sirve para establecer dos forms diferentes, por lo tanto presentar
+        dos formularios para que complete el usario.
+        """
+        formMesAnterior = forms.MesesForms(request.POST, prefix='fAnterior')
+        formMesActual = forms.MesesForms(request.POST, prefix='fActual')
+
+        if formMesAnterior.is_valid() and formMesActual.is_valid():
+            # formMesAnterior.save()
+            # formMesActual.save()
+            # # redireccion automatica
+            # return HttpResponseRedirect(reverse('resultados_graficos'))
+            pass
+    else:
+        # se crean los forms vacios y dividido
+        formMesAnterior = forms.MesesForms(prefix='fAnterior')
+        formMesActual = forms.MesesForms(prefix='fActual')
     
-    data = {'formKey':formMes}
+    
+    data = {
+        'formKeyAnterior':formMesAnterior,
+        'formKeyActual':formMesActual,
+        }
     return render(request, 'Contenidos/Formulario/registrar_meses.html', data)
 
 

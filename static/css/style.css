@@ -37,3 +37,27 @@ nav.bg-custom-1{
     /* cambia su scale durante el hover */
     transform: scale(0.92) !important;
 }
+
+
+
+/* LOGO HOVER */
+.logo-wrapper:hover {
+    transform: scale(1.05);
+}
+
+/* BTN CORTE */
+.btn-action-blue {
+    border-radius: 8px;
+}
+
+/* BTN HOVER */
+.btn-action-blue:hover {
+    background-color: #0b5ed7 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(13, 110, 253, 0.3) !important;
+}
+
+/* NEGRITA */
+.fw-extrabold {
+    font-weight: 800;
+}
