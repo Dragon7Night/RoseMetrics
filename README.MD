@@ -29,10 +29,11 @@ El núcleo del proyecto utiliza las siguientes dependencias:
 ## Pasos para la Instalación
 
 1. **Ubicarse en la terminal** en la ruta de su preferencia.
-   ```bash
+   ´´´bash
    cd C:/
    mkdir ProyectosGit
    cd ProyectosGit
+   ´´´
 
    - Sugerencia de codigo (opcional)
 
@@ -65,7 +66,7 @@ El núcleo del proyecto utiliza las siguientes dependencias:
       .env\Scripts\activate
    ´´´
 
-   > **Nota:** para desactivar el entorno virtual se usa el comando \´deactivate\´.
+   > **Nota:** para desactivar el entorno virtual se usa el comando ´deactivate´.
 
 6. Instalación de requirements
 
