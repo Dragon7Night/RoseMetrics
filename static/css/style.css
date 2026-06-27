@@ -23,7 +23,7 @@ nav.bg-custom-1{
 /* BTN normal */
 .hover-btn {
     /* mantener los bordes, para evitar bug visual*/
-    border-radius: 4px; 
+    border-radius: 1px !important;
 
     /* vuelve a su estado normal despues de 5s del hover */
     transition: all 0.5s ease-out !important; 
@@ -32,7 +32,10 @@ nav.bg-custom-1{
 /* BTN hover */
 .hover-btn:hover {
     background-color: rgba(11, 11, 66, 0.459) !important;
-    border-radius: 15% !important;
+    border-top-left-radius: 18px !important;
+    border-top-right-radius: 18px !important;
+    border-bottom-left-radius: 18px !important;
+    border-bottom-right-radius: 18px !important;
     
     /* cambia su scale durante el hover */
     transform: scale(0.92) !important;

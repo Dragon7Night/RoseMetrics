@@ -13,11 +13,11 @@
 {% block card_contenido %}
 <div class="container-fluid py-2">
     
-    <div class="row mb-4">
+    <div class="row mb-2">
         <div class="col-12 text-center">
             <h3 class="fw-bold text-dark">Simulador Bi-Mensual RoseMetrics</h3>
             <p class="text-muted">Ingresa los datos correspondientes a ambos períodos para efectuar el análisis de derivadas correlacionadas.</p>
-            <hr class="w-25 mx-auto border-2 border-primary">
+            <p class="text-muted">Importante: los periodos a considerar deben todos aquellos en donde existe una variación en el precio.</p>
         </div>
     </div>
 
@@ -29,10 +29,10 @@
             <div class="col-12 col-lg-6">
                 <div class="card shadow-sm border-0 h-100">
                     <div class="card-header bg-secondary text-white py-3">
-                        <h5 class="card-title mb-0 text-center fw-bold">📅 Período 1: Mes Histórico / Anterior</h5>
+                        <h5 class="card-title mb-0 text-center fw-bold">Primer periodo: Mes Historico / Anterior</h5>
                     </div>
                     <div class="card-body p-4">
-                        <p class="small text-muted mb-4">Introduce las métricas base del mes de origen previas al último cambio estructural de precios.</p>
+                        <p class="small text-muted mb-4">Ingresa los datos base del mes de origen previo al último cambio del precio de la suscripcion.</p>
                         
                         {% for field in formKeyAnterior %}
                             <div class="mb-3">
@@ -52,10 +52,10 @@
             <div class="col-12 col-lg-6">
                 <div class="card shadow border-0 h-100" style="border-top: 4px solid #1a1a2e !important;">
                     <div class="card-header bg-custom-1 text-white py-3" style="background-color: #1a1a2e;">
-                        <h5 class="card-title mb-0 text-center fw-bold">🚀 Período 2: Mes de Control / Actual</h5>
+                        <h5 class="card-title mb-0 text-center fw-bold">Segundo periodo: Mes de Control / Actual</h5>
                     </div>
                     <div class="card-body p-4">
-                        <p class="small text-muted mb-4">Introduce las métricas recolectadas tras la variación de tarifas para proyectar la estabilidad financiera.</p>
+                        <p class="small text-muted mb-4">Introduce los datos recolectadas tras la variacion de tarifas para proyectar la estabilidad financiera.</p>
                         
                         {% for field in formKeyActual %}
                             <div class="mb-3">
@@ -78,9 +78,9 @@
             <div class="col-12 text-center">
                 <div class="d-grid gap-2 col-md-6 mx-auto">
                     <button type="submit" class="btn btn-primary btn-lg py-3 fw-bold shadow hover-btn" style="background-color: #1a1a2e; border: none;">
-                        📊 Consolidar Períodos y Procesar Métricas
+                        Comenzar proyeccion de los periodos
                     </button>
-                    <small class="text-muted mt-1">Al presionar el botón se validarán los formularios simétricamente.</small>
+                    <small class="text-muted mt-1">Al presionar el botón se validaran los formularios simetricamente.</small>
                 </div>
             </div>
         </div>

@@ -27,7 +27,7 @@ class MesesForms(forms.ModelForm):
    
     precio_actual = forms.DecimalField(
         widget=forms.NumberInput(attrs={'class': 'form-control form-control-lg', 'placeholder': '0.00'}),
-        label="Ingrese el precio actual de su suscripción:"
+        label="Ingrese el precio inicial de la suscripción:"
     )
 
     precio_anterior = forms.DecimalField(
@@ -37,17 +37,17 @@ class MesesForms(forms.ModelForm):
 
     sub_totales_activos = forms.IntegerField(
         widget=forms.NumberInput(attrs={'class': 'form-control form-control-lg', 'placeholder': '0'}),
-        label="Ingrese la cantidad aproximada de las suscripciones totales activas:"
+        label="Ingrese la cantidad aproximada de las suscripciones activas durante el periodo:"
     )
 
     sub_mensuales_nuevas_max = forms.IntegerField(
         widget=forms.NumberInput(attrs={'class': 'form-control form-control-lg', 'placeholder': '0'}),
-        label="Ingrese la cantidad de máxima de suscripciones obtenidas en el mes:"
+        label="Ingrese la cantidad total de suscripciones obtenidas durante el periodo:"
     )
 
     sub_mensuales_perdidas_max = forms.IntegerField(
         widget=forms.NumberInput(attrs={'class': 'form-control form-control-lg', 'placeholder': '0'}),
-        label="SIngrese la cantidad máxima suscripciones perdidas en el mes:"
+        label="Ingrese la cantidad de suscripciones perdidas durante el periodo:"
     )
 
     # num_mes = forms.IntegerField(
