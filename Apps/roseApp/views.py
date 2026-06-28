@@ -128,27 +128,50 @@ def registrarMeses(request):
             # definir la 'x' en las ecuaciones (con valor variables)
             Pa = sp.Symbol('Pa')
             
+            # funcion de adquisicion
             Adq = Sm - (Tpn * Pa)
+
+            # funcion de tasa de perdida (Churn)
             Chr = Up + (Per * Pa)
+
+            # funcion de usuarios estables
             U = Adq / Chr
+
+            # funcion de ingreso
             I = Pa * U
 
-            # Evaluación de las métricas en el escenario actual
+            """
+            .subs
+            es un metodo de sympy para sustituir el valor de precio actual 
+            en donde el valor de las variable [Pa_actual] se asigna a la 
+            variable [Pa]
+
+            esto se hace con todas las funciones creadas antes
+            """
             adq_actual = float(Adq.subs(Pa, Pa_actual))
             chr_actual = float(Chr.subs(Pa, Pa_actual))
             u_actual = int(U.subs(Pa, Pa_actual))
             ingresos_actual = float(I.subs(Pa, Pa_actual))
 
-            # Optimización por Derivadas (Búsqueda del Ingreso Máximo)
-            dI_dPa = sp.diff(I, Pa) # Primera Derivada
-            soluciones = sp.solve(dI_dPa, Pa)
+            # calcular la primera derivada
+            primeraD_fIngreso = sp.diff(I, Pa)
+
+            # calcular la primera derivada igual a cero
+            primeraD_igualCero = sp.solve(primeraD_fIngreso, Pa)
             
             # Filtramos para quedarnos con el precio real y positivo
-            precios_viables = [float(sol) for sol in soluciones if sol.is_real and sol > 0]
+            precios_viables = [float(sol) for sol in primeraD_igualCero if sol.is_real and sol > 0]
             precio_optimo = precios_viables[0] if precios_viables else Pa_actual
 
-            d2I_dPa2 = sp.diff(dI_dPa, Pa) # Segunda Derivada
-            confirmacion_2d = float(d2I_dPa2.subs(Pa, precio_optimo))
+            """
+            la segunda derivada se obtiene por orden, que si calcula la primera derivada
+            la segunda derivada deriva la segunda derivada
+            """
+
+            # calcular la segunta derivada
+            segundaD_fIngreso = sp.diff(primeraD_fIngreso, Pa)
+
+            segundaDerivada_r = float(segundaD_fIngreso.subs(Pa, precio_optimo))
 
             # guardar datos
             
@@ -163,7 +186,7 @@ def registrarMeses(request):
 
 
                 precio_optimo_1derivada=precio_optimo, 
-                confirmacion_2derivada=confirmacion_2d
+                confirmacion_2derivada=segundaDerivada_r
             )
 
 

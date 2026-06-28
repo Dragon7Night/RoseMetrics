@@ -76,6 +76,7 @@ El núcleo del proyecto utiliza las siguientes dependencias:
    ```
 
 8. **Iniciar proyecto en Django**
+
    Opción 1
    ```bash
    py .\manage.py runserver
