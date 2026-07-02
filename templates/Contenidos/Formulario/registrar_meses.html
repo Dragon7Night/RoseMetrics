@@ -77,7 +77,7 @@
         <div class="row mt-5">
             <div class="col-12 text-center">
                 <div class="d-grid gap-2 col-md-6 mx-auto">
-                    <button type="submit" class="btn btn-primary btn-lg py-3 fw-bold shadow hover-btn" style="background-color: #1a1a2e; border: none;">
+                    <button type="submit" id="btnProyeccion" class="btn btn-primary btn-lg py-3 fw-bold shadow hover-btn" style="background-color: #1a1a2e; border: none;">
                         Comenzar proyeccion de los periodos
                     </button>
                     <small class="text-muted mt-1">Al presionar el botón se validaran los formularios simetricamente.</small>
@@ -93,54 +93,67 @@
 
 
 
+<script>
+// CAMBIOS 
+document.getElementById("btnProyeccion").addEventListener("click",function(){
+
+    const datos={
+
+        precioInicialAnterior:
+            document.getElementById("id_precio_inicial_anterior").value,
+
+        precioPosteriorAnterior:
+            document.getElementById("id_precio_posterior_anterior").value,
+
+        suscripcionesAnterior:
+            document.getElementById("id_suscripciones_activas_anterior").value,
+
+        obtenidasAnterior:
+            document.getElementById("id_suscripciones_obtenidas_anterior").value,
+
+        perdidasAnterior:
+            document.getElementById("id_suscripciones_perdidas_anterior").value,
+
+
+        precioInicialActual:
+            document.getElementById("id_precio_inicial_actual").value,
+
+        precioPosteriorActual:
+            document.getElementById("id_precio_posterior_actual").value,
+
+        suscripcionesActual:
+            document.getElementById("id_suscripciones_activas_actual").value,
+
+        obtenidasActual:
+            document.getElementById("id_suscripciones_obtenidas_actual").value,
+
+        perdidasActual:
+            document.getElementById("id_suscripciones_perdidas_actual").value
+
+    };
+
+    localStorage.setItem(
+
+        "datosProyeccion",
+
+        JSON.stringify(datos)
+
+    );
+
+    window.open(
+
+        "/resultados/",
+
+        "_blank",
+
+        "width=1400,height=900"
+
+    );
+
+});
+
+</script>
 
 
 
-
-
-
-
-
-{% comment %}
-{% block card_contenido %}
-
-
-<div class="container-fluid py-4">
-    <div class="row justify-content-center">
-        <div class="col-10 col-md-6">
-            <div class="card mb-4">
-
-                <div class="row justify-content-center">
-                    <div class="col-8 col-md-8 col-lg-6">
-
-                        <!-- TITULO DE CARD -->
-                        <div class="card-header pb-2">
-                            <h4 class="text-center">Registro de datos</h4>
-                            <hr class="horizontal dark mb-3">
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-
-                            <form method="post">
-                                {% csrf_token %}
-
-                                {{formKey.as_p}}
-
-                                <div class="d-grid mt-4">
-                                    <input type="submit" class="btn btn-primary" value="Registrar cargo">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-</div>
-
-
-{% endblock %}
-{% endcomment %}
 

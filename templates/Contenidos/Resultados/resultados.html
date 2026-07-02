@@ -1,0 +1,134 @@
+{% extends 'Base/base_index.html' %}
+
+{% load static %}
+
+{% block name_page %}
+    Resultados de la Simulación
+{% endblock %}
+
+{% block card_contenido %}
+<div class="container-fluid py-4">
+
+    <div class="row">
+        <div class="col-12 text-center mb-4">
+            <h2 class="fw-bold">Resultados de la Proyección</h2>
+            <p class="text-muted">Análisis gráfico de la simulación realizada.</p>
+        </div>
+    </div>
+
+    <div class="row text-center mb-4">
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h6>Ingreso Histórico</h6>
+                    <h3 id="ingresoHistorico">$0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h6>Ingreso Actual</h6>
+                    <h3 id="ingresoActual">$0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h6>Crecimiento</h6>
+                    <h3 id="crecimiento">0%</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Proyección de Ingresos</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="graficoIngresos"></canvas>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+<script>
+    // DATOS RECIBIDOS DESDE DJANGO
+    const ingresoAnterior = parseFloat("{{ ingreso_historico|default:0 }}".replace(",", "."));
+    const ingresoActual = parseFloat("{{ ingreso_actual|default:0 }}".replace(",", "."));
+    
+    const precioAnterior = parseFloat("{{ precio_historico|default:0 }}".replace(",", "."));
+    const precioActual = parseFloat("{{ precio_actual|default:0 }}".replace(",", "."));
+    
+    const clientesAnterior = parseInt("{{ subs_historicas|default:0 }}");
+    const clientesActual = parseInt("{{ subs_actuales|default:0 }}");
+    
+    console.log(ingresoAnterior);
+    console.log(ingresoActual);
+    console.log(precioAnterior);
+    console.log(precioActual);
+    console.log(clientesAnterior);
+    console.log(clientesActual);
+    
+    // CALCULOS
+    let crecimiento = 0;
+    if (ingresoAnterior > 0) {
+        crecimiento = ((ingresoActual - ingresoAnterior) / ingresoAnterior) * 100;
+    }
+    
+    // TARJETAS SUPERIORES
+    document.getElementById("ingresoHistorico").innerHTML = "$" + ingresoAnterior.toLocaleString();
+    document.getElementById("ingresoActual").innerHTML = "$" + ingresoActual.toLocaleString();
+    document.getElementById("crecimiento").innerHTML = crecimiento.toFixed(2) + "%";
+    
+    // PROYECCIONES
+    const proyeccion1 = ingresoActual * 1.08;
+    const proyeccion2 = ingresoActual * 1.15;
+    const proyeccion3 = ingresoActual * 1.22;
+    
+    // GRAFICO DE INGRESOS
+    new Chart(
+        document.getElementById("graficoIngresos"),
+        {
+            type: "line",
+            data: {
+                labels: [
+                    "Histórico",
+                    "Actual",
+                    "Proyección 1",
+                    "Proyección 2",
+                    "Proyección 3"
+                ],
+                datasets: [{
+                    label: "Ingresos",
+                    data: [
+                        ingresoAnterior,
+                        ingresoActual,
+                        proyeccion1,
+                        proyeccion2,
+                        proyeccion3
+                    ],
+                    borderWidth: 4,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    },
+                    title: {
+                        display: true,
+                        text: "Curva de Proyección de Ingresos"
+                    }
+                }
+            }
+        }
+    );
+</script>

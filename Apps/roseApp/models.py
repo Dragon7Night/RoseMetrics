@@ -79,10 +79,10 @@ class PrediccionMes(models.Model):
     ingresos_totales = models.DecimalField(max_digits=15, decimal_places=2)
     
     # VAR -> para la 1era derivada??
-    # precio_optimo_1derivada = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    precio_optimo_1derivada = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     # VAR -> para la 2da derivada??
-    # ganancia_maxima_2derivada = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    ganancia_maxima_2derivada = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
 
     def __str__(self):
