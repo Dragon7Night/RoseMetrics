@@ -23,6 +23,11 @@ import sympy as sp
 def landingPage(request):
     return render(request, 'index.html')
 
+
+def resultados(request):
+    return render(request, 'Complementos/Resultados/resultados.html')
+
+
 def registrarMeses(request):
     formMes = forms.MesesForms()
     
@@ -170,30 +175,41 @@ def registrarMeses(request):
 
             # calcular la segunta derivada
             segundaD_fIngreso = sp.diff(primeraD_fIngreso, Pa)
-
             segundaDerivada_r = float(segundaD_fIngreso.subs(Pa, precio_optimo))
+
+            # ingreso del precio optimo
+            ingreso_optimo_calculado = float(I.subs(Pa, precio_optimo))
 
             # guardar datos
             
             models.PrediccionMes.objects.create(
-                mes=mesActual, # mes de control
+                mes=mesActual, 
                 tasa_perdida_nuevos_no_suscritos=Tpn,
                 tasa_perdida_antiguos_suscritos=Per,
                 f_adquisicion=adq_actual,
                 f_churn=chr_actual,
                 usuarios_estables=u_actual,
                 ingresos_totales=ingresos_actual,
-
-
                 precio_optimo_1derivada=precio_optimo, 
-                confirmacion_2derivada=segundaDerivada_r
+                ganancia_maxima_2derivada=segundaDerivada_r
             )
 
 
-            # return HttpResponseRedirect(reverse('resultados_graficos', kwargs={'mes_id': mes_actual.id}))
+            context = {
+                "ingreso_historico": float(mesAnterior.precio_actual) * int(mesAnterior.sub_totales_activos),
+                "ingreso_actual": ingresos_actual,
+                "precio_historico": float(mesAnterior.precio_actual),
+                "precio_actual": Pa_actual,
+                "subs_historicas": int(mesAnterior.sub_totales_activos),
+                "subs_actuales": int(mesActual.sub_totales_activos),
+                "precio_optimo": precio_optimo,
+                "usuarios_estables": u_actual,
+                "adquisicion": adq_actual,
+                "churn": chr_actual,
+                "ingreso_optimo": ingreso_optimo_calculado,
+            }
 
-            return HttpResponseRedirect(request.path)
-
+            return render(request, "Contenidos/Resultados/resultados.html", context)
 
     else:
         # se crean los forms vacios y dividido
@@ -208,4 +224,12 @@ def registrarMeses(request):
     return render(request, 'Contenidos/Formulario/registrar_meses.html', data)
 
 
+def listadoProyecciones(request):
+    """
+    muestra todas las proyecciones registradas en la DB
+    """
+    predicciones = models.PrediccionMes.objects.all().order_by('-id')
 
+    data = {'predicciones': predicciones}
+
+    return render(request, 'Contenidos/Resultados/listado_proyecciones.html', data)
