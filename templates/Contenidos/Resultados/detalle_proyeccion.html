@@ -183,24 +183,26 @@
     }
     
     // RENDERIZADO DE INFORMACION INGRESOS
-    document.getElementById("ingresoHistorico").innerHTML = "$" + ingresoAnterior.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
-    document.getElementById("ingresoActual").innerHTML = "$" + ingresoActual.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    document.getElementById("ingresoHistorico").innerHTML = "$" + ingresoAnterior.toLocaleString('es-CL');
+    document.getElementById("ingresoActual").innerHTML = "$" + ingresoActual.toLocaleString('es-CL');
     document.getElementById("crecimiento").innerHTML = (crecimiento >= 0 ? "+" : "") + crecimiento.toFixed(2) + "%";
     
     // RENDERIZADO DEL ESCENARIO OPTIMO
-    document.getElementById("precioOptimoSugerido").innerHTML = "$" + precioOptimo.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
-    document.getElementById("ingresoMaxProyectado").innerHTML = "$" + ingresoOptimo.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    document.getElementById("precioOptimoSugerido").innerHTML = "$" + precioOptimo.toLocaleString('es-CL');
+    document.getElementById("ingresoMaxProyectado").innerHTML = "$" + ingresoOptimo.toLocaleString('es-CL');
     document.getElementById("comunidadEstableMax").innerHTML = usuariosOptimos.toLocaleString('es-CL') + " Usuarios";
 
     // RENDERIZADO DE LA TABLA COMPARATIVA
-    document.getElementById("txtPrecioActual").innerHTML = "$" + precioActual.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
-    document.getElementById("txtPrecioOptimo").innerHTML = "$" + precioOptimo.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    document.getElementById("txtPrecioActual").innerHTML = "$" + precioActual.toLocaleString('es-CL');
+    document.getElementById("txtPrecioOptimo").innerHTML = "$" + precioOptimo.toLocaleString('es-CL');
 
     // Fila Ingresos
-    document.getElementById("tabIngresoActual").innerHTML = "$" + ingresoActual.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
-    document.getElementById("tabIngresoOptimo").innerHTML = "$" + ingresoOptimo.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    document.getElementById("tabIngresoActual").innerHTML = "$" + ingresoActual.toLocaleString('es-CL');
+    document.getElementById("tabIngresoOptimo").innerHTML = "$" + ingresoOptimo.toLocaleString('es-CL');
+
     const cellIngresoImpacto = document.getElementById("tabIngresoImpacto");
-    cellIngresoImpacto.innerHTML = (diffIngresos >= 0 ? "+ $" : "- $") + Math.abs(diffIngresos).toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    cellIngresoImpacto.innerHTML = (diffIngresos >= 0 ? "+ $" : "- $") + Math.abs(diffIngresos).toLocaleString('es-CL');
+    
     cellIngresoImpacto.className = diffIngresos >= 0 ? "fw-bold text-success pe-4" : "fw-bold text-danger pe-4";
 
     // Fila Usuarios
@@ -262,3 +264,4 @@
     );
 </script>
 {% endblock %}
+

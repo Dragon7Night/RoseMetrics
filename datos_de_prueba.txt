@@ -1,0 +1,30 @@
+
+Periodo 1
+precio inicial de la suscripción: 7500
+precio posterior al ajuste: 8000
+suscripciones activas: 6450
+suscripciones obtenidas: 650
+suscripciones perdidas: 540
+
+Periodo 2
+precio inicial de la suscripción: 11000
+precio posterior al ajuste: 12000
+suscripciones activas: 3793
+suscripciones obtenidas: 350
+suscripciones perdidas: 440
+
+--------------------------------------
+
+Periodo 1
+precio inicial de la suscripción: 4000
+precio posterior al ajuste: 4500
+suscripciones activas: 9200
+suscripciones obtenidas: 1100
+suscripciones perdidas: 368
+
+Periodo 2
+precio inicial de la suscripción: 8500
+precio posterior al ajuste: 9500
+suscripciones activas: 5100
+suscripciones obtenidas: 450
+suscripciones perdidas: 663
