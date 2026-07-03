@@ -4,8 +4,6 @@
 {% block name_page %} Historial de Proyecciones {% endblock %}
 
 {% block card_contenido %}
-<link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.5/css/buttons.bootstrap5.css">
 
 <div class="container-fluid py-4">
     <div class="row mb-4">
@@ -37,7 +35,7 @@
                         <td class="text-success fw-bold">$ {{ prediccion.precio_optimo_1derivada }}</td>
                         <td>$ {{ prediccion.ingresos_totales }}</td>
                         <td class="text-center">
-                            <a href="{% url 'ver_resultados' prediccion.id %}" class="btn btn-sm btn-primary shadow-sm" style="background-color: #1a1a2e; border: none;">
+                            <a href="{% url 'mostrar_proyeccion' prediccion.id %}" class="btn btn-sm btn-primary shadow-sm" style="background-color: #1a1a2e; border: none;">
                                 <i class="bi bi-eye-fill me-1"></i> Ver Resultados
                             </a>
                         </td>

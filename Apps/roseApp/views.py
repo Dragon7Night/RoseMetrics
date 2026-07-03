@@ -24,10 +24,6 @@ def landingPage(request):
     return render(request, 'index.html')
 
 
-def resultados(request):
-    return render(request, 'Complementos/Resultados/resultados.html')
-
-
 def registrarMeses(request):
     formMes = forms.MesesForms()
     
@@ -177,12 +173,10 @@ def registrarMeses(request):
             segundaD_fIngreso = sp.diff(primeraD_fIngreso, Pa)
             segundaDerivada_r = float(segundaD_fIngreso.subs(Pa, precio_optimo))
 
-            # ingreso del precio optimo
-            ingreso_optimo_calculado = float(I.subs(Pa, precio_optimo))
 
-            # guardar datos
+            # guardar datos de la nueva prediccion
             
-            models.PrediccionMes.objects.create(
+            nueva_prediccion = models.PrediccionMes.objects.create(
                 mes=mesActual, 
                 tasa_perdida_nuevos_no_suscritos=Tpn,
                 tasa_perdida_antiguos_suscritos=Per,
@@ -194,22 +188,8 @@ def registrarMeses(request):
                 ganancia_maxima_2derivada=segundaDerivada_r
             )
 
-
-            context = {
-                "ingreso_historico": float(mesAnterior.precio_actual) * int(mesAnterior.sub_totales_activos),
-                "ingreso_actual": ingresos_actual,
-                "precio_historico": float(mesAnterior.precio_actual),
-                "precio_actual": Pa_actual,
-                "subs_historicas": int(mesAnterior.sub_totales_activos),
-                "subs_actuales": int(mesActual.sub_totales_activos),
-                "precio_optimo": precio_optimo,
-                "usuarios_estables": u_actual,
-                "adquisicion": adq_actual,
-                "churn": chr_actual,
-                "ingreso_optimo": ingreso_optimo_calculado,
-            }
-
-            return render(request, "Contenidos/Resultados/resultados.html", context)
+            # redireccionamiento directo a la proyeccion
+            return HttpResponseRedirect(reverse('mostrar_proyeccion', args=[nueva_prediccion.id]))
 
     else:
         # se crean los forms vacios y dividido
@@ -233,3 +213,53 @@ def listadoProyecciones(request):
     data = {'predicciones': predicciones}
 
     return render(request, 'Contenidos/Resultados/listado_proyecciones.html', data)
+
+
+
+def detalleProyeccion(request, prediccion_id):
+    """
+    Muestra una proyeccion por ID con todos sus detalles y graficos
+    """
+
+    prediccion = get_object_or_404(models.PrediccionMes, id=prediccion_id)
+    mesActual = prediccion.mes
+    
+    # se obtiene el mes anterior para hacer la comparacion
+    mesAnterior = models.Mes.objects.filter(num_mes=mesActual.num_mes - 1).first()
+    
+    if mesAnterior:
+        ingreso_historico = float(mesAnterior.precio_actual) * int(mesAnterior.sub_totales_activos)
+        precio_historico = float(mesAnterior.precio_actual)
+        subs_historicas = int(mesAnterior.sub_totales_activos)
+    else:
+        ingreso_historico = 0.0
+        precio_historico = float(mesActual.precio_anterior)
+        subs_historicas = 0
+
+    # se re-calcula el ingreso optimo basado en los registros
+    Sm = float(mesActual.sub_mensuales_nuevas_max)
+    Up = float(mesActual.tasa_perdida_base)
+    Tpn = float(prediccion.tasa_perdida_nuevos_no_suscritos)
+    Per = float(prediccion.tasa_perdida_antiguos_suscritos)
+    precio_optimo = float(prediccion.precio_optimo_1derivada)
+
+    adq_optima = Sm - (Tpn * precio_optimo)
+    chr_optimo = Up + (Per * precio_optimo)
+    u_optima = adq_optima / chr_optimo if chr_optimo > 0 else 0
+    ingreso_optimo_calculado = precio_optimo * u_optima
+
+    context = {
+        "ingreso_historico": ingreso_historico,
+        "ingreso_actual": float(prediccion.ingresos_totales),
+        "precio_historico": precio_historico,
+        "precio_actual": float(mesActual.precio_actual),
+        "subs_historicas": subs_historicas,
+        "subs_actuales": int(mesActual.sub_totales_activos),
+        "precio_optimo": precio_optimo,
+        "usuarios_estables": int(prediccion.usuarios_estables),
+        "adquisicion": float(prediccion.f_adquisicion),
+        "churn": float(prediccion.f_churn),
+        "ingreso_optimo": ingreso_optimo_calculado,
+    }
+    
+    return render(request, "Contenidos/Resultados/detalle_proyeccion.html", context)

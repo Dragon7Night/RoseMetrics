@@ -1,4 +1,5 @@
 notas.ru
 .env
 
-templates/Contenidos/Graficos/
+templates/Contenidos/detalle_proyeccion.html
+templates/Contenidos/detalle_proyeccion_copia.html

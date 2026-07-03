@@ -1,0 +1,264 @@
+{% extends 'Base/base_index.html' %}
+
+{% load static %}
+
+<!-- °=====================================° -->
+<!--    °Pagina -> Graficos mas proyecciones -->
+<!-- °=====================================° -->
+
+
+<!-- Nombre de la pestaña -->
+{% block name_page %}
+    Resultados de la Simulación
+{% endblock %}
+
+
+
+
+{% block card_contenido %}
+<div class="container-fluid py-4">
+
+    <div class="row text-center mb-4">
+        <div class="col-12">
+            <h2 class="fw-bold text-dark">Resultados de la Proyección</h2>
+            <p class="text-muted">Análisis gráfico de la simulación realizada.</p>
+        </div>
+    </div>
+
+    <div class="row text-center mb-5">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body py-3">
+                    <h6 class="text-uppercase text-muted small fw-bold">Ingreso Histórico</h6>
+                    <h3 id="ingresoHistorico" class="fw-bold text-secondary">$0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm border-0 h-100" style="border-bottom: 3px solid #1a1a2e;">
+                <div class="card-body py-3">
+                    <h6 class="text-uppercase text-muted small fw-bold">Ingreso Período Actual</h6>
+                    <h3 id="ingresoActual" class="fw-bold text-dark">$0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body py-3">
+                    <h6 class="text-uppercase text-muted small fw-bold">Crecimiento logrado</h6>
+                    <h3 id="crecimiento" class="fw-bold text-primary">0%</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12 mb-3">
+            <h4 class="fw-bold text-success">
+                <i class="bi bi-lightning-charge-fill me-2"></i> Proyección sugerida y mas óptima 
+            </h4>
+
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0 h-100" style="border-left: 5px solid #28a745;">
+                <div class="card-body py-4">
+                    <h6 class="text-uppercase text-success small fw-bold">Precio Óptimo</h6>
+                    <h2 id="precioOptimoSugerido" class="fw-bold text-success">$0</h2>
+                    <p class="card-text text-muted small mb-0">El precio ideal para maximizar las ganancias.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0 h-100" style="border-left: 5px solid #198754;">
+                <div class="card-body py-4">
+                    <h6 class="text-uppercase text-success small fw-bold">Ingresos Proyectados</h6>
+                    <h2 id="ingresoMaxProyectado" class="fw-bold text-success">$0</h2>
+                    <p class="card-text text-muted small mb-0">Los ingresos esperados durante el periodo.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0 h-100" style="border-left: 5px solid #0f5132;">
+                <div class="card-body py-4">
+                    <h6 class="text-uppercase text-success small fw-bold">Publico recurrente</h6>
+                    <h2 id="comunidadEstableMax" class="fw-bold text-success">0</h2>
+                    <p class="card-text text-muted small mb-0">La estimacion de suscripciones estables durante durante el periodo actual.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12 mb-3">
+            <h4 class="fw-bold text-dark">
+                <i class="bi bi-arrow-left-right me-2"></i> Comparativa de control
+            </h4>
+        </div>
+        
+        <div class="col-12">
+            <div class="card shadow-sm border-0 overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-info">
+                            <tr>
+                                <th scope="col" class="py-3 ps-4">Métrica</th>
+                                <th scope="col" class="py-3">Con Precio Actual (<span id="txtPrecioActual">$0</span>)</th>
+                                <th scope="col" class="py-3 text-success">Con Precio Óptimo Recomendado (<span id="txtPrecioOptimo">$0</span>)</th>
+                                <th scope="col" class="py-3 pe-4">Impacto / Variación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-secondary py-3 ps-4">Ingresos Totales</th>
+                                <td id="tabIngresoActual" class="fw-semibold">$0</td>
+                                <td id="tabIngresoOptimo" class="text-success fw-bold">$0</td>
+                                <td id="tabIngresoImpacto" class="fw-bold pe-4">$0</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-secondary py-3 ps-4">Usuarios Estables</th>
+                                <td id="tabUserActual" class="fw-semibold">0 usuarios</td>
+                                <td id="tabUserOptimo" class="text-success fw-bold">0 usuarios</td>
+                                <td id="tabUserImpacto" class="fw-bold pe-4">0 usuarios</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-secondary py-3 ps-4">Tasa de Churn (Fuga)</th>
+                                <td id="tabChurnActual" class="fw-semibold">0%</td>
+                                <td id="tabChurnOptimo" class="text-success fw-bold">0%</td>
+                                <td id="tabChurnImpacto" class="fw-bold pe-4">0%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4 border-0">
+        <div class="card-header bg-light py-3">
+            <h5 class="mb-0 fw-bold text-dark"><i class="bi bi-graph-up me-2"></i>Curva de Proyección</h5>
+        </div>
+        <div class="card-body p-4">
+            <canvas id="graficoIngresos" style="max-height: 380px;"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    // DEFINICION DE VARIABLES
+    const ingresoAnterior = parseFloat("{{ ingreso_historico|default:0 }}".replace(",", "."));
+    const ingresoActual = parseFloat("{{ ingreso_actual|default:0 }}".replace(",", "."));
+    const ingresoOptimo = parseFloat("{{ ingreso_optimo|default:0 }}".replace(",", "."));
+    
+    const precioActual = parseFloat("{{ precio_actual|default:0 }}".replace(",", "."));
+    const precioOptimo = parseFloat("{{ precio_optimo|default:0 }}".replace(",", "."));
+    
+    const usuariosActuales = parseInt("{{ usuarios_estables|default:0 }}");
+    const churnActual = parseFloat("{{ churn|default:0 }}".replace(",", "."));
+
+    // CÁLCULO DE MÉTRICAS DERIVADAS OPTIMIZADAS
+    // Usuarios óptimos proyectados = I_max / p^*
+    const usuariosOptimos = precioOptimo > 0 ? Math.round(ingresoOptimo / precioOptimo) : 0;
+    
+    // Reconstrucción del Churn Óptimo usando la función lineal Chr = Up + (Per * Pa)
+    const baseChurn = 0.02; // Tasa base -> 2%
+    const perSlope = precioActual > 0 ? (churnActual - baseChurn) / precioActual : 0;
+    const churnOptimo = baseChurn + (perSlope * precioOptimo);
+
+    // Impactos / Diferenciales algebraicos
+    const diffIngresos = ingresoOptimo - ingresoActual;
+    const diffUsuarios = usuariosOptimos - usuariosActuales;
+    const diffChurn = (churnOptimo - churnActual) * 100;
+
+    // Cálculo del crecimiento tradicional (Histórico vs Actual)
+    let crecimiento = 0;
+    if (ingresoAnterior > 0) {
+        crecimiento = ((ingresoActual - ingresoAnterior) / ingresoAnterior) * 100;
+    }
+    
+    // RENDERIZADO DE INFORMACION INGRESOS
+    document.getElementById("ingresoHistorico").innerHTML = "$" + ingresoAnterior.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    document.getElementById("ingresoActual").innerHTML = "$" + ingresoActual.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    document.getElementById("crecimiento").innerHTML = (crecimiento >= 0 ? "+" : "") + crecimiento.toFixed(2) + "%";
+    
+    // RENDERIZADO DEL ESCENARIO OPTIMO
+    document.getElementById("precioOptimoSugerido").innerHTML = "$" + precioOptimo.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    document.getElementById("ingresoMaxProyectado").innerHTML = "$" + ingresoOptimo.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    document.getElementById("comunidadEstableMax").innerHTML = usuariosOptimos.toLocaleString('es-CL') + " Usuarios";
+
+    // RENDERIZADO DE LA TABLA COMPARATIVA
+    document.getElementById("txtPrecioActual").innerHTML = "$" + precioActual.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    document.getElementById("txtPrecioOptimo").innerHTML = "$" + precioOptimo.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+
+    // Fila Ingresos
+    document.getElementById("tabIngresoActual").innerHTML = "$" + ingresoActual.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    document.getElementById("tabIngresoOptimo").innerHTML = "$" + ingresoOptimo.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    const cellIngresoImpacto = document.getElementById("tabIngresoImpacto");
+    cellIngresoImpacto.innerHTML = (diffIngresos >= 0 ? "+ $" : "- $") + Math.abs(diffIngresos).toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + " CLP";
+    cellIngresoImpacto.className = diffIngresos >= 0 ? "fw-bold text-success pe-4" : "fw-bold text-danger pe-4";
+
+    // Fila Usuarios
+    document.getElementById("tabUserActual").innerHTML = usuariosActuales.toLocaleString('es-CL') + " usuarios";
+    document.getElementById("tabUserOptimo").innerHTML = usuariosOptimos.toLocaleString('es-CL') + " usuarios";
+    const cellUserImpacto = document.getElementById("tabUserImpacto");
+    cellUserImpacto.innerHTML = (diffUsuarios >= 0 ? "+ " : "") + diffUsuarios.toLocaleString('es-CL') + " usuarios";
+    cellUserImpacto.className = diffUsuarios >= 0 ? "fw-bold text-success pe-4" : "fw-bold text-danger pe-4";
+
+    // Fila Churn (Fuga)
+    document.getElementById("tabChurnActual").innerHTML = (churnActual * 100).toFixed(2) + "%";
+    document.getElementById("tabChurnOptimo").innerHTML = (churnOptimo * 100).toFixed(2) + "%";
+
+    const cellChurnImpacto = document.getElementById("tabChurnImpacto");
+    cellChurnImpacto.innerHTML = (diffChurn <= 0 ? "" : "+") + diffChurn.toFixed(2) + "%" + (diffChurn <= 0 ? " (Fuga más baja)" : " (Fuga más alta)");
+    cellChurnImpacto.className = diffChurn <= 0 ? "fw-bold text-success pe-4" : "fw-bold text-danger pe-4";
+
+    // ACTUALIZACIÓN DEL GRÁFICO
+    new Chart(
+        document.getElementById("graficoIngresos"),
+        {
+            type: "line",
+            data: {
+                labels: [
+                    "Período Histórico",
+                    "Período Actual (Precio Vigente)",
+                    "Proyección (Precio Óptimo)"
+                ],
+                datasets: [{
+                    label: "Ingresos Totales ($)",
+                    data: [
+                        ingresoAnterior,
+                        ingresoActual,
+                        ingresoOptimo
+                    ],
+                    borderColor: "#3ddfff",
+                    backgroundColor: "rgba(3, 121, 145, 0.1)",
+                    borderWidth: 4,
+                    fill: true,
+                    tension: 0.35,
+                    pointBackgroundColor: "#0000ff",
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true },
+                    title: {
+                        display: true,
+                        text: "Trayectoria de Ingresos y Optimización"
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: false }
+                }
+            }
+        }
+    );
+</script>
+{% endblock %}

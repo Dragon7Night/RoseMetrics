@@ -15,13 +15,9 @@ urlpatterns = [
 
     path('registrar-meses/', registrarMeses, name='registrar_meses'),
 
-    path('resultados/', resultados, name='resultados'),
-
-    # muestra las proyecciones en la DB
     path('proyecciones/', listadoProyecciones, name='listado_proyecciones'),
-    
-    # muestra las graficas por ID de la proyeccion
-    path('resultados/<int:prediccion_id>/', resultadosDetalle, name='ver_resultados'),
+
+    path('proyeccion/<int:prediccion_id>/', detalleProyeccion, name='mostrar_proyeccion'),
 
 ]
 

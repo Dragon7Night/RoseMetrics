@@ -88,13 +88,3 @@ class PrediccionMes(models.Model):
     def __str__(self):
         return f"Resultados óptimos - Mes {self.mes.num_mes}"
 
-
-
-
-
-
-
-
-
-
-
