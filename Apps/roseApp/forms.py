@@ -24,13 +24,12 @@ class MesesForms(forms.ModelForm):
             'sub_mensuales_perdidas_max'
         ]
 
-   
-    precio_actual = forms.DecimalField(
+    precio_anterior = forms.DecimalField(
         widget=forms.NumberInput(attrs={'class': 'form-control form-control-lg', 'placeholder': '0.00'}),
         label="Ingrese el precio inicial de la suscripción:"
     )
 
-    precio_anterior = forms.DecimalField(
+    precio_actual = forms.DecimalField(
         widget=forms.NumberInput(attrs={'class': 'form-control form-control-lg', 'placeholder': '0.00'}),
         label="Ingrese el precio posterior al ajuste:"
     )

@@ -23,10 +23,13 @@ import sympy as sp
 def landingPage(request):
     return render(request, 'index.html')
 
+ESCALA_MONEDA = 1000
 
 def registrarMeses(request):
-    formMes = forms.MesesForms()
     
+    for k, v in request.POST.items():
+        print(k, "->", v)
+
     if request.method == 'POST':
 
         """
@@ -43,7 +46,20 @@ def registrarMeses(request):
             mesAnterior = formMesAnterior.save(commit=False)
             mesActual = formMesActual.save(commit=False)
 
-            # obtenemos el ultimo dia del mes de la DB y le sumamos uno
+            print()
+
+            print("OBJETO MES ACTUAL")
+
+            print(mesActual.precio_anterior)
+            print(mesActual.precio_actual)
+
+            print()
+
+            print("----- OBJETO -----")
+            print(mesActual.__dict__)
+            print("------------------")
+
+            # obtener el ultimo dia del mes de la DB y se suma 1
             ultimoMes = models.Mes.objects.all().order_by('-num_mes').first()
 
             """
@@ -64,6 +80,13 @@ def registrarMeses(request):
             mesAnterior.num_mes = siguienteNum
             mesActual.num_mes = siguienteNum + 1
 
+            print("===== DATOS RECIBIDOS =====")
+            print("Precio anterior:", mesActual.precio_anterior)
+            print("Precio actual:", mesActual.precio_actual)
+            print("Suscripciones nuevas:", mesActual.sub_mensuales_nuevas_max)
+            print("Suscripciones perdidas:", mesActual.sub_mensuales_perdidas_max)
+            print("===========================")
+
             # finalmente se guardan los formularios con los realizados
             mesAnterior.save()
             mesActual.save()
@@ -79,20 +102,31 @@ def registrarMeses(request):
             """
 
             # DEFINICION DE VARIABLES
+            # Precio posterior del periodo actual
+            Pa_actual = float(mesActual.precio_actual) / ESCALA_MONEDA
 
-            # precio actual (mes actual)
-            Pa_actual = float(mesActual.precio_actual)
+            # Precio inicial del mismo periodo
+            Pa_inicial = float(mesActual.precio_anterior) / ESCALA_MONEDA
 
-           # precio actual (mes anterior)
-            Pa_anterior = float(mesAnterior.precio_actual)
+            # Variación del precio del periodo actual
+            Vps = Pa_actual - Pa_inicial
 
-            # variacion del precios actual (con validacion para evitar division por 0)
-            Vps = Pa_actual - Pa_anterior
-            if Vps == 0:
-                Vps = 1.0  
+            print("--------------------------------")
+            print("Precio anterior:", Pa_inicial)
+            print("Precio actual:", Pa_actual)
+            print("Vps:", Vps)
+            print("--------------------------------")
+
+            # Validación matemática
+            if Vps <= 0:
+                raise ValueError(
+                    "La variación del precio debe ser mayor que cero para aplicar el modelo."
+                )
             
-            # suscripciones totales del periodo
-            Sm = float(mesActual.sub_mensuales_nuevas_max)
+
+            Sm = max(
+                float(mesAnterior.sub_mensuales_nuevas_max),
+                float(mesActual.sub_mensuales_nuevas_max))
 
             # suscripciones perdidas durante el periodo
             Sp = float(mesActual.sub_mensuales_perdidas_max)
@@ -149,29 +183,40 @@ def registrarMeses(request):
 
             esto se hace con todas las funciones creadas antes
             """
-            adq_actual = float(Adq.subs(Pa, Pa_actual))
-            chr_actual = float(Chr.subs(Pa, Pa_actual))
-            u_actual = int(U.subs(Pa, Pa_actual))
-            ingresos_actual = float(I.subs(Pa, Pa_actual))
+            adq_actual = max(0,float(Adq.subs(Pa, Pa_actual)))
+            chr_actual = max(0.0001,float(Chr.subs(Pa, Pa_actual)))
 
-            # calcular la primera derivada
-            primeraD_fIngreso = sp.diff(I, Pa)
-
-            # calcular la primera derivada igual a cero
-            primeraD_igualCero = sp.solve(primeraD_fIngreso, Pa)
+            u_actual = round(max(0,float(U.subs(Pa, Pa_actual))))
             
-            # Filtramos para quedarnos con el precio real y positivo
-            precios_viables = [float(sol) for sol in primeraD_igualCero if sol.is_real and sol > 0]
-            precio_optimo = precios_viables[0] if precios_viables else Pa_actual
+            ingresos_actual = (float(mesActual.precio_actual) * float(mesActual.sub_totales_activos))
 
-            """
-            la segunda derivada se obtiene por orden, que si calcula la primera derivada
-            la segunda derivada deriva la segunda derivada
-            """
+            precio_min = Pa_inicial
+            precio_max = Pa_actual + 5
 
-            # calcular la segunta derivada
-            segundaD_fIngreso = sp.diff(primeraD_fIngreso, Pa)
-            segundaDerivada_r = float(segundaD_fIngreso.subs(Pa, precio_optimo))
+            mejor_precio = Pa_actual
+            mejor_ingreso = -1
+
+            paso = 0.05
+            precio = precio_min
+
+            while precio <= precio_max:
+            
+                adq = max(0, Sm - (Tpn * precio))
+                chr = max(0.0001, Up + (Per * precio))
+
+                usuarios = adq / chr
+
+                ingreso = precio * usuarios
+
+                if ingreso > mejor_ingreso:
+                    mejor_ingreso = ingreso
+                    mejor_precio = precio
+
+                precio += paso
+
+            precio_optimo = mejor_precio
+
+            segundaDerivada_r = 0
 
 
             # guardar datos de la nueva prediccion
@@ -184,7 +229,7 @@ def registrarMeses(request):
                 f_churn=chr_actual,
                 usuarios_estables=u_actual,
                 ingresos_totales=ingresos_actual,
-                precio_optimo_1derivada=precio_optimo, 
+                precio_optimo_1derivada=precio_optimo * ESCALA_MONEDA,
                 ganancia_maxima_2derivada=segundaDerivada_r
             )
 
@@ -237,26 +282,31 @@ def detalleProyeccion(request, prediccion_id):
         subs_historicas = 0
 
     # se re-calcula el ingreso optimo basado en los registros
-    Sm = float(mesActual.sub_mensuales_nuevas_max)
+    Sm = max(
+        float(mesAnterior.sub_mensuales_nuevas_max),
+        float(mesActual.sub_mensuales_nuevas_max))
     Up = float(mesActual.tasa_perdida_base)
     Tpn = float(prediccion.tasa_perdida_nuevos_no_suscritos)
     Per = float(prediccion.tasa_perdida_antiguos_suscritos)
-    precio_optimo = float(prediccion.precio_optimo_1derivada)
+    precio_optimo = (float(prediccion.precio_optimo_1derivada)/ 1000)
 
-    adq_optima = Sm - (Tpn * precio_optimo)
-    chr_optimo = Up + (Per * precio_optimo)
-    u_optima = adq_optima / chr_optimo if chr_optimo > 0 else 0
-    ingreso_optimo_calculado = precio_optimo * u_optima
+    adq_optimo = max(0, Sm - (Tpn * precio_optimo))
+
+    chr_optimo = max(0.0001, Up + (Per * precio_optimo))
+
+    u_optima = adq_optimo / chr_optimo if chr_optimo > 0 else 0
+    ingreso_optimo_calculado = (precio_optimo* ESCALA_MONEDA* u_optima)
+
+    ingreso_actual_real = (float(mesActual.precio_actual)* float(mesActual.sub_totales_activos))
 
     context = {
         "ingreso_historico": ingreso_historico,
-        "ingreso_actual": float(prediccion.ingresos_totales),
+        "ingreso_actual": ingreso_actual_real,
         "precio_historico": precio_historico,
         "precio_actual": float(mesActual.precio_actual),
         "subs_historicas": subs_historicas,
         "subs_actuales": int(mesActual.sub_totales_activos),
-        "precio_optimo": precio_optimo,
-        "usuarios_estables": int(prediccion.usuarios_estables),
+        "precio_optimo": precio_optimo * 1000,
         "adquisicion": float(prediccion.f_adquisicion),
         "churn": float(prediccion.f_churn),
         "ingreso_optimo": ingreso_optimo_calculado,

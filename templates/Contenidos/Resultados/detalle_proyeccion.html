@@ -159,7 +159,7 @@
     const precioActual = parseFloat("{{ precio_actual|default:0 }}".replace(",", "."));
     const precioOptimo = parseFloat("{{ precio_optimo|default:0 }}".replace(",", "."));
     
-    const usuariosActuales = parseInt("{{ usuarios_estables|default:0 }}");
+    const usuariosActuales = parseInt("{{ subs_actuales|default:0 }}");
     const churnActual = parseFloat("{{ churn|default:0 }}".replace(",", "."));
 
     // CÁLCULO DE MÉTRICAS DERIVADAS OPTIMIZADAS

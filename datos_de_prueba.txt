@@ -1,30 +1,30 @@
 
 Periodo 1
-precio inicial de la suscripción: 7500
-precio posterior al ajuste: 8000
-suscripciones activas: 6450
-suscripciones obtenidas: 650
-suscripciones perdidas: 540
+precio inicial de la suscripción: 5500
+precio posterior al ajuste: 5000
+suscripciones activas: 6000
+suscripciones obtenidas: 1000
+suscripciones perdidas: 500
 
 Periodo 2
-precio inicial de la suscripción: 11000
-precio posterior al ajuste: 12000
-suscripciones activas: 3793
-suscripciones obtenidas: 350
-suscripciones perdidas: 440
+precio inicial de la suscripción: 6000
+precio posterior al ajuste: 5500
+suscripciones activas: 9000
+suscripciones obtenidas: 2000
+suscripciones perdidas: 600
 
 --------------------------------------
 
 Periodo 1
-precio inicial de la suscripción: 4000
-precio posterior al ajuste: 4500
-suscripciones activas: 9200
-suscripciones obtenidas: 1100
-suscripciones perdidas: 368
+precio inicial de la suscripción: xxx
+precio posterior al ajuste: xxx
+suscripciones activas: xxx
+suscripciones obtenidas: xxx
+suscripciones perdidas: xxx
 
 Periodo 2
-precio inicial de la suscripción: 8500
-precio posterior al ajuste: 9500
-suscripciones activas: 5100
-suscripciones obtenidas: 450
-suscripciones perdidas: 663
+precio inicial de la suscripción: xxx
+precio posterior al ajuste: xxx
+suscripciones activas: xxx
+suscripciones obtenidas: xxx
+suscripciones perdidas: xxx

@@ -19,7 +19,6 @@
                 <thead class="table-dark">
                     <tr>
                         <th>N° Proyección</th>
-                        <th>Mes de Control</th>
                         <th>Precio Actual</th>
                         <th>Precio Óptimo</th>
                         <th>Ingresos Esperados</th>
@@ -30,7 +29,6 @@
                     {% for prediccion in predicciones %}
                     <tr>
                         <td><strong># {{ prediccion.id }}</strong></td>
-                        <td>Mes {{ prediccion.mes.num_mes }}</td>
                         <td>$ {{ prediccion.mes.precio_actual }}</td>
                         <td class="text-success fw-bold">$ {{ prediccion.precio_optimo_1derivada }}</td>
                         <td>$ {{ prediccion.ingresos_totales }}</td>
