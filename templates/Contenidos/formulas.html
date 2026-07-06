@@ -1,0 +1,146 @@
+{% extends 'Base/base_index.html' %}
+{% load static %}
+
+{% block name_page %} Sustentación Matemática {% endblock %}
+
+{% block card_contenido %}
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h2 class="fw-bold text-dark">Estructura Matemática del Modelo</h2>
+            <p class="text-muted">Desglose de modelos y funciones matematicas utilizadas.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0 p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <span class="badge bg-primary me-2 fs-6">1</span>
+                    <h5 class="fw-bold m-0 text-dark">Función de Adquisición</h5>
+                </div>
+                <p class="text-muted small">Mide el flujo proyectado de nuevas suscripciones en base al precio teórico.</p>
+                
+                <div class="bg-light p-3 rounded text-center my-2">
+                    <h3>
+                    $$Adq(P_a) = S_m + T_{pn} \cdot (P_a - P_{a,\text{actual}})$$
+                    </h3>
+                </div>
+
+                <div class="mt-3">
+                    <h6 class="fw-bold text-secondary small text-uppercase">Glosario de Variables:</h6>
+                    <ul class="list-unstyled small text-muted ps-2">
+                        <li class="mb-1"><strong>\(P_a\):</strong> Variable independiente. Es el precio teórico o simulado que se desea evaluar.</li>
+                        <li class="mb-1"><strong>\(P_{a,\text{actual}}\):</strong> Precio real de la suscripción durante el periodo actual.</li>
+                        <li class="mb-1"><strong>\(S_m\):</strong> Volumen base de suscripciones mensuales nuevas captadas en el mes actual.</li>
+                        <li class="mb-1"><strong>\(T_{pn}\):</strong> Pendiente de adquisición. Indica cuántos usuarios nuevos se ganan o pierden por cada peso que varia en el precio.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0 p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <span class="badge bg-danger me-2 fs-6">2</span>
+                    <h5 class="fw-bold m-0 text-dark">Función de Pérdida (Churn)</h5>
+                </div>
+                <p class="text-muted small">Determina la tasa porcentual de deserción de los usuarios activos ante un cambio de tarifa.</p>
+                
+                <div class="bg-light p-3 rounded text-center my-2">
+                    <h3>
+                    $$Chr(P_a) = tf_{\text{actual}} + Per \cdot (P_a - P_{a,\text{actual}})$$
+                    </h3>
+                </div>
+
+                <div class="mt-3">
+                    <h6 class="fw-bold text-secondary small text-uppercase">Glosario de Variables:</h6>
+                    <ul class="list-unstyled small text-muted ps-2">
+                        <li class="mb-1"><strong>\(P_a\):</strong> Precio teórico o simulado a evaluar en la simulación.</li>
+                        <li class="mb-1"><strong>\(P_{a,\text{actual}}\):</strong> Precio real de la suscripción durante el periodo actual.</li>
+                        <li class="mb-1"><strong>\(tf_{\text{actual}}\):</strong> Tasa de fuga real calculada para el mes actual (2% como estandar).</li>
+                        <li class="mb-1"><strong>\(Per\):</strong> Coeficiente de elasticidad de abandono. Mide cuánto se incrementa la tasa de pérdida por cada peso que aumenta en el precio.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0 p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <span class="badge bg-danger me-2 fs-6">3</span>
+                    <h5 class="fw-bold m-0 text-dark">Población en Estado Estable</h5>
+                </div>
+                <p class="text-muted small">Cálculo que determina el punto de equilibrio donde las altas mensuales igualan a las bajas.</p>
+                
+                <div class="bg-light p-3 rounded text-center my-2">
+                    <h3>
+                    $$U(P_a) = \frac{Adq(P_a)}{Chr(P_a)}$$
+                    </h3>
+                </div>
+
+                <div class="mt-3">
+                    <h6 class="fw-bold text-secondary small text-uppercase">Glosario de Variables:</h6>
+                    <ul class="list-unstyled small text-muted ps-2">
+                        <li class="mb-1"><strong>\(U(P_a)\):</strong> Volumen final de usuarios activos estables que retendrá la plataforma a largo plazo bajo el precio evaluado.</li>
+                        <li class="mb-1"><strong>\(Adq(P_a)\):</strong> Resultado de la función de adquisición de nuevos usuarios.</li>
+                        <li class="mb-1"><strong>\(Chr(P_a)\):</strong> Resultado de la función de tasa de pérdida (Churn Rate) esperada.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0 p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <span class="badge bg-primary me-2 fs-6">4</span>
+                    <h5 class="fw-bold m-0 text-dark">Función de Ingreso Proyectado</h5>
+                </div>
+                <p class="text-muted small">Ecuación fundamental del modelo financiero que representa las ganancias brutas estimadas.</p>
+                
+                <div class="bg-light p-3 rounded text-center my-2">
+                    <h3>
+                    $$I(P_a) = P_a \cdot U(P_a)$$
+                    </h3>
+                </div>
+
+                <div class="mt-3">
+                    <h6 class="fw-bold text-secondary small text-uppercase">Glosario de Variables:</h6>
+                    <ul class="list-unstyled small text-muted ps-2">
+                        <li class="mb-1"><strong>\(I(P_a)\):</strong> Facturación mensual total estimada que percibirá el negocio.</li>
+                        <li class="mb-1"><strong>\(P_a\):</strong> El precio unitario simulado cobrado por cada suscripción individual.</li>
+                        <li class="mb-1"><strong>\(U(P_a)\):</strong> La cantidad total de usuarios estables que pagan dicho precio.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0 p-4" style="border-left: 5px solid #1a1a2e !important;">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-patch-check-fill me-2 fs-4" style="color: #1a1a2e;"></i>
+                    <h4 class="fw-bold m-0 text-dark">Criterio de Optimización de la Primera Derivada</h4>
+                </div>
+                <p class="text-muted">
+                    Para localizar analíticamente el techo de ingresos del negocio (el punto más alto de la parábola), se ejecuta el cálculo matemático marginal, derivando la función de ingresos respecto al precio e igualando el resultado a cero:
+                </p>
+                <div class="bg-ligh p-4 rounded text-center my-3">
+                    <h3>
+                    $$\frac{dI}{dP_a} = 0$$
+                    </h3>
+                </div>
+                <p class="text-muted small mb-0">
+                    <strong>Resolución Simbólica:</strong> SymPy despeja de forma automática el valor numérico exacto de la variable \((P_a)\) que cumple esta condición obligatoria.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

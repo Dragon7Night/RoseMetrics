@@ -23,12 +23,15 @@ import sympy as sp
 def landingPage(request):
     return render(request, 'index.html')
 
+def formula(request):
+    return render(request, 'Contenidos/formulas.html')
+
 ESCALA_MONEDA = 1000
 
 def registrarMeses(request):
     
-    for k, v in request.POST.items():
-        print(k, "->", v)
+    # for k, v in request.POST.items():
+    #     print(k, "->", v)
 
     if request.method == 'POST':
 
@@ -46,18 +49,18 @@ def registrarMeses(request):
             mesAnterior = formMesAnterior.save(commit=False)
             mesActual = formMesActual.save(commit=False)
 
-            print()
+            # print()
 
-            print("OBJETO MES ACTUAL")
+            # print("OBJETO MES ACTUAL")
 
-            print(mesActual.precio_anterior)
-            print(mesActual.precio_actual)
+            # print(mesActual.precio_anterior)
+            # print(mesActual.precio_actual)
 
-            print()
+            # print()
 
-            print("----- OBJETO -----")
-            print(mesActual.__dict__)
-            print("------------------")
+            # print("----- OBJETO -----")
+            # print(mesActual.__dict__)
+            # print("------------------")
 
             # obtener el ultimo dia del mes de la DB y se suma 1
             ultimoMes = models.Mes.objects.all().order_by('-num_mes').first()
@@ -80,12 +83,12 @@ def registrarMeses(request):
             mesAnterior.num_mes = siguienteNum
             mesActual.num_mes = siguienteNum + 1
 
-            print("===== DATOS RECIBIDOS =====")
-            print("Precio anterior:", mesActual.precio_anterior)
-            print("Precio actual:", mesActual.precio_actual)
-            print("Suscripciones nuevas:", mesActual.sub_mensuales_nuevas_max)
-            print("Suscripciones perdidas:", mesActual.sub_mensuales_perdidas_max)
-            print("===========================")
+            # print("===== DATOS RECIBIDOS =====")
+            # print("Precio anterior:", mesActual.precio_anterior)
+            # print("Precio actual:", mesActual.precio_actual)
+            # print("Suscripciones nuevas:", mesActual.sub_mensuales_nuevas_max)
+            # print("Suscripciones perdidas:", mesActual.sub_mensuales_perdidas_max)
+            # print("===========================")
 
             # finalmente se guardan los formularios con los realizados
             mesAnterior.save()
@@ -111,11 +114,11 @@ def registrarMeses(request):
             # Variación del precio del periodo actual
             Vps = Pa_actual - Pa_inicial
 
-            print("--------------------------------")
-            print("Precio anterior:", Pa_inicial)
-            print("Precio actual:", Pa_actual)
-            print("Vps:", Vps)
-            print("--------------------------------")
+            # print("--------------------------------")
+            # print("Precio anterior:", Pa_inicial)
+            # print("Precio actual:", Pa_actual)
+            # print("Vps:", Vps)
+            # print("--------------------------------")
 
             # Validación matemática
             if Vps <= 0:

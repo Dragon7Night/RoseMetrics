@@ -19,5 +19,6 @@ urlpatterns = [
 
     path('proyeccion/<int:prediccion_id>/', detalleProyeccion, name='mostrar_proyeccion'),
 
+    path('formula/', formula, name='formula')
 ]
 
